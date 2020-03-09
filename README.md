@@ -1,14 +1,14 @@
 # hackaton-stefanini-estatico
-############## Stefanini Solutions - HACKATON STEFANINI ESTATICO
+############## Stefanini Solutions - HACKATON STEFANINI ESTATICO ############## 
 
 1. Baixar o projeto no repositório: https://github.com/ticoleite80/hackaton-stefanini-estatico.git 
 2. Entrar na pasta raiz do projeto
 3. realizar o NPM INSTALL
-4. executar o comando grunt
+4. executar o comando GRUNT
 5. Entrar no endereço http://localhost:8300
 
 CONFIG CORS BACKEND
-1. entrar no arquio wildfly-18.0.1.Final/standalone/configuration/standalone.xml
+1. entrar no arquivo wildfly-18.0.1.Final/standalone/configuration/standalone.xml
 2. Procurar por <host name="default-host" alias="localhost"> no arquivo
 3. Alterar a tag encontrada pelo conteudo abaixo
 <host name="default-host" alias="localhost">
