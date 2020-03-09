@@ -4,9 +4,22 @@
     angular.module('hackaton-stefanini').config(function ($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: 'app/spas/listagem/template/listagem.tpl.html',
-                controller: 'ListagemController as vm'
+                templateUrl: 'app/spas/homePage/template/home.tpl.html',
+                controller: 'HomeController as vm'
             })
+            .when('/listarPessoas', {
+                templateUrl: 'app/spas/pessoas/template/pessoa-listar.tpl.html',
+                controller: 'PessoaListarController as vm'
+            })
+            .when('/EditarPessoas/:idPessoa', {
+                templateUrl: 'app/spas/pessoas/template/pessoa-incluir-alterar.tpl.html',
+                controller: 'PessoaIncluirAlterarController as vm'
+            })
+            .when('/cadastrarPessoa', {
+                templateUrl: 'app/spas/pessoas/template/pessoa-incluir-alterar.tpl.html',
+                controller: 'PessoaIncluirAlterarController as vm'
+            })
+            
             .otherwise({
                 templateUrl: 'index_ERROR.html'
             });

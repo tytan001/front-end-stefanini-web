@@ -12,10 +12,24 @@
         var service = {
 
             /**METODOS DO CONTROLLER */
-            teste: function (dados) {
+            listarPessoas: function (dados) {
 
                 var urlServico = "http://localhost:8080/treinamento/api/pessoas";
                 return executarServicoIIB_GET(urlServico, dados);
+            },
+
+            listarPessoaId: function (id) {
+
+                var urlServico = "http://localhost:8080/treinamento/api/pessoas/"+id;
+                return $http.get(urlServico).then(tratarResposta, tratarErro);
+                //return executarServicoIIB_GET(urlServico, dados);
+            },
+
+            alterarPessoa: function (pessoa) {
+
+                var urlServico = "http://localhost:8080/treinamento/api/pessoas/";
+               // return $http.get(urlServico).then(tratarResposta, tratarErro);
+                return executarServicoIIB_POST(urlServico, pessoa);
             }
         };
 
