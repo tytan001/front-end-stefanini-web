@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hackaton Stefanini</title>
+    <!-- start-html-test-code -->
+    <!-- A porta abaixo deve ser a mesma especificada no arquivo Gruntfile -> watch -> options -> livereload -->
+    <!-- Antes da primeira utilização, pode ser necessário abrir a url abaixo em outra aba do navegador para aceitar o certificado SSL -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="app/spas/hackaton-stefanini.module.js"></script>
+    <script src="app/spas/hackaton-stefanini.route.js"></script>
+    <script src="app/spas/hackaton-stefanini.service.js"></script>
+
+    <script src="app/spas/listagem/listagem.controller.js"></script>
+    <!-- end-html-test-code -->
+</head>
+
+<body ng-app="hackaton-stefanini">
+    <div ng-view></div>
+</body>
+
+</html>
