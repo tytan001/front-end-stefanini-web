@@ -5,7 +5,8 @@ PessoaIncluirAlterarController.$inject = ["$rootScope", "$scope", "$location",
 function PessoaIncluirAlterarController($rootScope, $scope, $location,
     $q, $filter, $routeParams, HackatonStefaniniService) {
     vm = this;
-
+    vm.pessoa = {};
+    vm.pessoa.situacao = false;
     vm.init = function () {
        if($routeParams.idPessoa){
         vm.tituloTela = "Alterar Pessoa";
@@ -28,14 +29,22 @@ function PessoaIncluirAlterarController($rootScope, $scope, $location,
 
 
     vm.incluirAlterarPessoa = function(){
-        vm.pessoa.situacao = true;
-        vm.pessoa.id = 2;
-        HackatonStefaniniService.alterarPessoa(vm.pessoa).then(
+        vm.pessoa.dataNascimento = vm.converteData(vm.pessoa.dataNascimento);
+        var obj = JSON.stringify(vm.pessoa);
+
+        HackatonStefaniniService.alterarPessoa(obj).then(
             function (response) {
                 if (response.data !== undefined)
                     vm.sucesso = response.data;
             }
         );
+    }
+
+    vm.converteData = function(data){
+        var dia = data.slice(0,2);
+        var mes = data.slice(2,4);
+        var ano = data.slice(4,8);
+        return ano+"-"+mes+"-"+dia;
     }
 
 }

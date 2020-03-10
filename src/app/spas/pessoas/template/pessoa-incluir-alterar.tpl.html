@@ -1,5 +1,5 @@
 <div ng-init="vm.init()">
-    <div class="container">
+    <div class="container" style="background-color: #ffffff !important;">
         
         <form>
             <div class="mx-auto" style="width: 200px;">
@@ -11,18 +11,18 @@
               </div>
             <div class="form-group">
               <label for="emailPessoa">Email</label>
-              <input type="email" class="form-control" id="emailPessoa" ng-model="vm.pessoa.email" placeholder="name@example.com">
+              <input type="text" class="form-control" id="emailPessoa" ng-model="vm.pessoa.email" placeholder="name@example.com">
             </div>
             <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <label for="nascimentoPessoa">Data de nascimento</label>
-                        <input type="text" class="form-control" id="nascimentoPessoa" ng-model="vm.pessoa.dataNascimento" placeholder="01/01/1900">
+                        <input type="text" class="form-control" id="nascimentoPessoa" ng-model="vm.pessoa.dataNascimento"  ui-mask="99/99/9999" >
                       </div>
                 </div>
                 <div class="col">
                     <div class="form-check">
-                        <input class="form-check-input" ng-checked="vm.pessoa.situacao" type="checkbox" value="" id="defaultCheck1">
+                        <input class="form-check-input" ng-checked="vm.pessoa.situacao" ng-click="vm.pessoa.situacao = !vm.pessoa.situacao" type="checkbox" id="defaultCheck1">
                         <label class="form-check-label" for="defaultCheck1">
                           Situação
                         </label>

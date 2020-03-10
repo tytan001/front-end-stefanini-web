@@ -26,12 +26,25 @@
             },
 
             alterarPessoa: function (pessoa) {
-
+                //var urlServico = "http://localhost:8080/treinamento/api/enderecos/";
                 var urlServico = "http://localhost:8080/treinamento/api/pessoas/";
                // return $http.get(urlServico).then(tratarResposta, tratarErro);
-                return executarServicoIIB_POST(urlServico, pessoa);
+                return executar_POST(urlServico, pessoa);
             }
         };
+
+        function executar_POST(url, dados){
+            $http({
+                method: 'POST',
+                url: url,
+                data: dados
+              }).then(function successCallback(response) {
+                dados.push(response.data);
+                alert("Deu bom")
+              }, function errorCallback(response) {
+                alert("Deu ruim!");
+              });
+        }
 
         /**METODOS REST */
         function executarServicoIIB_GET(urlServico, params) {
@@ -47,7 +60,7 @@
             var url = "{basePath}" + urlServico;
             url = url.replace("{basePath}", baseAPIPath);
 
-            return $http.post(url, dados).then(tratarResposta, tratarErro);
+            return $http.post(urlServico, dados).then(tratarResposta, tratarErro);
         }
 
         /**METODOS TRATAMENTO ERROS */

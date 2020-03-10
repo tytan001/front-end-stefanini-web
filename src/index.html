@@ -16,6 +16,8 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-utils/0.1.1/angular-ui-utils.min.js"></script>
     <script src="app/spas/hackaton-stefanini.module.js"></script>
     <script src="app/spas/hackaton-stefanini.route.js"></script>
     <script src="app/spas/hackaton-stefanini.service.js"></script>
@@ -26,10 +28,16 @@
     <script src="app/spas/pessoas/pessoa-incluir-alterar.controller.js"></script>
     
     <!-- end-html-test-code -->
+    <style>
+        #corpoDaPagina{
+                min-height: 600px !important;
+                position:relative;
+            }
+    </style>
 </head>
 
-<body ng-app="hackaton-stefanini" style="background-image: url('app/imagens/logo_stf_mini.jpg');">
-    <div class="container" style="background-color: #ffffff; opacity: 95%;">
+<body ng-app="hackaton-stefanini" style="background-image: url('app/imagens/tec.jpg'); background-repeat: no-repeat; background-size: cover;">
+    <div class="container" style="background-color: #ffffff; opacity: 75%;" id="corpoDaPagina">
         <h1 style="text-align:center;">Stefanini Solutions</h1>
         <div ng-include="'app/spas/menu/template/menu.tpl.html'"></div>
         <div ng-view></div>
