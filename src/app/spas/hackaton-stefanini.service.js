@@ -13,41 +13,32 @@
 
             /**METODOS DO CONTROLLER */
             listarPessoas: function (dados) {
-
                 var urlServico = "http://localhost:8080/treinamento/api/pessoas";
                 return executarServicoIIB_GET(urlServico, dados);
             },
 
             listarPessoaId: function (id) {
-
                 var urlServico = "http://localhost:8080/treinamento/api/pessoas/"+id;
                 return $http.get(urlServico).then(tratarResposta, tratarErro);
-                //return executarServicoIIB_GET(urlServico, dados);
+            },
+            
+            excluirPessoa: function (id) {
+                var urlServico = "http://localhost:8080/treinamento/api/pessoas/"+id;
+                return $http.delete(urlServico).then(tratarResposta, tratarErro);
             },
 
             alterarPessoa: function (pessoa) {
                 var urlServico = "http://localhost:8080/treinamento/api/pessoas/";
-               // return $http.get(urlServico).then(tratarResposta, tratarErro);
                 return executarServicoIIB_PUT(urlServico, pessoa);
             },
             incluirPessoa: function (pessoa) {
                 var urlServico = "http://localhost:8080/treinamento/api/pessoas/";
-               // return $http.get(urlServico).then(tratarResposta, tratarErro);
                 return executarServicoIIB_POST(urlServico, pessoa);
             }
 
-        };
+           
 
-        function executar_alterar_incluir_pessoa(dados, metodo){
-            $http({
-                method: metodo,
-                url: "http://localhost:8080/treinamento/api/pessoas/",
-                data: dados
-              }).then(function successCallback(response) {
-                dados.push(response.data);
-              }, function errorCallback(response) {
-              });
-        }
+        };
 
         /**METODOS REST */
         function executarServicoIIB_GET(urlServico, params) {
@@ -65,6 +56,7 @@
         function executarServicoIIB_PUT(urlServico, dados) {
             return $http.put(urlServico, dados).then(tratarResposta, tratarErro);
         }
+       
 
         /**METODOS TRATAMENTO ERROS */
         function tratarResposta(response) {

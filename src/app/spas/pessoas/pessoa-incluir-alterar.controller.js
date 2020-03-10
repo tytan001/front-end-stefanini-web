@@ -44,9 +44,17 @@ function PessoaIncluirAlterarController($rootScope, $scope, $location,
         HackatonStefaniniService.alterarPessoa(obj).then(
             function (response) {
                 if (response.status == 200)
-                $location.path("listarPessoas");
+                    vm.goToListagem();
             }
         );
+    }
+    
+    vm.cancelar = function(){
+        vm.goToListagem();
+    }
+
+    vm.goToListagem = function(){
+        $location.path("listarPessoas");
     }
 
     vm.formataDataJava = function(data){

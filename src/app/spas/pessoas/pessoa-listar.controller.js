@@ -23,4 +23,24 @@ function PessoaListarController($rootScope, $scope, $location,
     vm.editar = function(id){
         $location.path("EditarPessoas/"+id);
     }
+
+    vm.excluir = function(id){
+        HackatonStefaniniService.excluirPessoa(id).then(
+            function (response) {
+                if (response.data !== undefined){
+                    alert("Excluido com sucesso!! (Provisório)")
+                }
+            }
+        );
+    }
+
+    vm.formataDataTela = function(data){
+        var ano = data.slice(0,4);
+        var mes = data.slice(5,7);
+        var dia = data.slice(8,10);
+        var dataFormatada = dia+mes+ano;
+        return dataFormatada;
+    }
+
+
 }
