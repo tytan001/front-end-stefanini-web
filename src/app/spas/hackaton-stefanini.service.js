@@ -26,23 +26,26 @@
             },
 
             alterarPessoa: function (pessoa) {
-                //var urlServico = "http://localhost:8080/treinamento/api/enderecos/";
                 var urlServico = "http://localhost:8080/treinamento/api/pessoas/";
                // return $http.get(urlServico).then(tratarResposta, tratarErro);
-                return executar_POST(urlServico, pessoa);
+                return executarServicoIIB_PUT(urlServico, pessoa);
+            },
+            incluirPessoa: function (pessoa) {
+                var urlServico = "http://localhost:8080/treinamento/api/pessoas/";
+               // return $http.get(urlServico).then(tratarResposta, tratarErro);
+                return executarServicoIIB_POST(urlServico, pessoa);
             }
+
         };
 
-        function executar_POST(url, dados){
+        function executar_alterar_incluir_pessoa(dados, metodo){
             $http({
-                method: 'POST',
-                url: url,
+                method: metodo,
+                url: "http://localhost:8080/treinamento/api/pessoas/",
                 data: dados
               }).then(function successCallback(response) {
                 dados.push(response.data);
-                alert("Deu bom")
               }, function errorCallback(response) {
-                alert("Deu ruim!");
               });
         }
 
@@ -56,11 +59,11 @@
         }
 
         function executarServicoIIB_POST(urlServico, dados) {
+            return $http.post(url, dados).then(tratarResposta, tratarErro);
+        }
 
-            var url = "{basePath}" + urlServico;
-            url = url.replace("{basePath}", baseAPIPath);
-
-            return $http.post(urlServico, dados).then(tratarResposta, tratarErro);
+        function executarServicoIIB_PUT(urlServico, dados) {
+            return $http.put(urlServico, dados).then(tratarResposta, tratarErro);
         }
 
         /**METODOS TRATAMENTO ERROS */
