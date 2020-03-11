@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html>
+<style>
+    .background-principal {
+        background: url(app/assets/InnovationHeader.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+</style>
 
 <head>
     <meta charset="UTF-8">
@@ -7,16 +16,23 @@
     <!-- start-html-test-code -->
     <!-- A porta abaixo deve ser a mesma especificada no arquivo Gruntfile -> watch -> options -> livereload -->
     <!-- Antes da primeira utilização, pode ser necessário abrir a url abaixo em outra aba do navegador para aceitar o certificado SSL -->
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
-    
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    
-    
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-utils/0.1.1/angular-ui-utils.min.js"></script>
     <script src="app/stefanini/stefanini.filters.js"></script>
     <script src="app/spas/hackaton-stefanini.module.js"></script>
@@ -27,18 +43,19 @@
     <script src="app/spas/menu/menu.controller.js"></script>
     <script src="app/spas/pessoas/pessoa-listar.controller.js"></script>
     <script src="app/spas/pessoas/pessoa-incluir-alterar.controller.js"></script>
-    
+
     <!-- end-html-test-code -->
 
 </head>
 
-<body ng-app="hackaton-stefanini" style="background-image: url('app/imagens/tec.jpg'); background-repeat: no-repeat; background-size: cover;">
-    <h1 style="text-align:center; width: 100%; font-family: Lohit Gurmukhi; font-size: 12; font-weight: bold; color: white; padding-top: 10px;">Hackaton Stefanini Solutions</h1>
+<body ng-app="hackaton-stefanini" class="background-principal">
+    <div class="container">
+        <h1 style="text-align:center; width: 100%; font-family: Lohit Gurmukhi; font-size: 12; font-weight: bold; color: white; padding-top: 10px;">Hackaton Stefanini Solutions</h1>
+    </div>
     <div ng-include="'app/spas/menu/template/menu.tpl.html'" style="width: 100%;"></div>
     <div class="container">
-        <div ng-view  style="background-color: #ffffff !important; opacity: 95%; min-height: 500px;"></div>
+        <div ng-view style="background-color: #ffffff !important; opacity: 90%; height: 350px !important; width: 900px !important; margin:0 auto;"></div>
     </div>
-    
 </body>
 
 </html>
