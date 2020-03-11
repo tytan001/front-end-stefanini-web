@@ -1,0 +1,39 @@
+<div ng-init="vm.init()">
+    <div class="container">
+        <form>
+            <div class="mx-auto" style="width: 200px;">
+                <h5 class="modal-title">{{vm.tituloTela}}</h5>
+              </div>
+            <div class="form-group">
+                <label for="nomePerfil">Nome: </label>
+                <input type="nome" class="form-control" id="nomePerfil" ng-model="vm.perfil.nome" placeholder="Digite o nome da perfil ...">
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlTextarea1">Descrição: </label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" ng-model="vm.perfil.descricao"></textarea>
+              </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="nascimentoPerfil">Data de Inclusão</label>
+                        <input type="text" class="form-control" id="nascimentoPerfil" ng-disabled="true" ng-model="vm.perfil.dataHoraInclusao">
+                      </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                      <label for="nascimentoPerfil">Data de Alteração</label>
+                      <input type="text" class="form-control" id="nascimentoPerfil" ng-disabled="true" ng-model="vm.perfil.dataHoraAlteracao">
+                    </div>
+              </div>
+            </div>    
+              
+              <div class="row">
+                <button type="button" class="btn btn-primary" ng-click="vm.incluirAlterarPerfil(vm.perfil)">Salvar</button>
+                <button type="button" class="btn btn-danger" ng-click="vm.cancelar()">Cancelar</button>
+              </div>
+          </form>
+        
+
+
+    </div>
+  </div>

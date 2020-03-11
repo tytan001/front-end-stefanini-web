@@ -1,23 +1,23 @@
-angular.module("hackaton-stefanini").controller("PessoaListarController", PessoaListarController);
-PessoaListarController.$inject = ["$rootScope", "$scope", "$location",
+angular.module("hackaton-stefanini").controller("PerfisListarController", PerfisListarController);
+PerfisListarController.$inject = ["$rootScope", "$scope", "$location",
     "$q", '$filter', '$routeParams', 'HackatonStefaniniService'];
 
-function PessoaListarController($rootScope, $scope, $location,
+function PerfisListarController($rootScope, $scope, $location,
     $q, $filter, $routeParams, HackatonStefaniniService) {
     vm = this;
-    vm.url = "http://localhost:8080/treinamento/api/pessoas/";
-
+    vm.url = "http://localhost:8080/treinamento/api/perfils/";
+   
     vm.init = function () {
         HackatonStefaniniService.listar(vm.url).then(
             function (response) {
                 if (response.data !== undefined)
-                    vm.listaPessoas = response.data;
+                    vm.listaPerfis = response.data;
             }
         );
     };
 
     vm.editar = function(id){
-        $location.path("EditarPessoas/"+id);
+        $location.path("EditarPerfis/"+id);
     }
 
     vm.excluir = function(id){
@@ -29,7 +29,7 @@ function PessoaListarController($rootScope, $scope, $location,
     }
 
     vm.goToListagem = function(){
-        $location.path("listarPessoas");
+        $location.path("listarPerfis");
     }
 
 }

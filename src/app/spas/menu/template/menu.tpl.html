@@ -34,8 +34,10 @@
           Perfil
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#" style="font-weight: bold; color: white; cursor: pointer;">Cadastrar</a>
-          <a class="dropdown-item" href="#" style="font-weight: bold; color: white; cursor: pointer;">Listar</a>
+          <a class="dropdown-item" ng-click="vm.chamarPagina('EditarPerfis')"
+            style="font-weight: bold; color: white; cursor: pointer;">Cadastrar</a>
+          <a class="dropdown-item" ng-click="vm.chamarPagina('listarPerfis')"
+            style="font-weight: bold; color: white; cursor: pointer;">Listar</a>
         </div>
       </li>
     </ul>

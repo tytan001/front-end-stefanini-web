@@ -1,46 +1,48 @@
-angular.module("hackaton-stefanini").controller("PessoaIncluirAlterarController", PessoaIncluirAlterarController);
-PessoaIncluirAlterarController.$inject = ["$rootScope", "$scope", "$location",
+angular.module("hackaton-stefanini").controller("PerfilIncluirAlterarController", PerfilIncluirAlterarController);
+PerfilIncluirAlterarController.$inject = ["$rootScope", "$scope", "$location",
     "$q", '$filter', '$routeParams', 'HackatonStefaniniService'];
 
-function PessoaIncluirAlterarController($rootScope, $scope, $location,
+function PerfilIncluirAlterarController($rootScope, $scope, $location,
     $q, $filter, $routeParams, HackatonStefaniniService) {
     vm = this;
-    vm.pessoa = {};
-    vm.pessoa.situacao = false;
-    vm.url = "http://localhost:8080/treinamento/api/pessoas/";
+    vm.url = "http://localhost:8080/treinamento/api/perfils/";
+
     vm.init = function () {
-       if($routeParams.idPessoa){
-        vm.tituloTela = "Editar Pessoa";
+       if($routeParams.idPerfil){
+        vm.tituloTela = "Editar Perfil";
         vm.acao = "Editar";
-        vm.listarPessoaId($routeParams.idPessoa);
+        vm.listarPerfilId($routeParams.idPerfil);
        }else{
-        vm.tituloTela = "Cadastrar Pessoa";
+        vm.tituloTela = "Cadastrar Perfil";
         vm.acao = "Cadastrar";
        }
     };
 
-    vm.listarPessoaId = function (id) {
+    vm.listarPerfilId = function (id) {
         HackatonStefaniniService.listarId(vm.url+id).then(
             function (response) {
                 if (response.data !== undefined){
-                    vm.pessoa = response.data;
-                    vm.pessoa.dataNascimento = vm.formataDataTela(response.data.dataNascimento);
+                    vm.perfil = response.data;
                 }
             }
         );
     };
 
-    vm.incluirAlterarPessoa = function(){
+    vm.incluirAlterarPerfil = function(){
         if(vm.acao == "Cadastrar"){
-            vm.executarIncluirPessoa();
+            vm.executarIncluirPerfil();
         }else if(vm.acao == "Editar"){
-            vm.executarAlterarPessoa();
+            vm.executarAlterarPerfil();
         }
     }
-
-    vm.executarIncluirPessoa = function(metodo){
-        vm.pessoa.dataNascimento = vm.formataDataJava(vm.pessoa.dataNascimento);
-        var obj = JSON.stringify(vm.pessoa);
+    vm.executarIncluirPerfil = function(){
+        var data  = new Date();
+        // var mes = data.getMonth()+1;
+        // //data.getDate()+ "/"+ mes +"/"+ data.getFullYear() +" - "+ data.getHours() +":"+ data.getMinutes() +":"+ data.getSeconds();
+        // var dataFormatadaJava =  data.getFullYear()+"-"+mes+"-"+data.getDate()+" "+ data.getHours() +":"+ data.getMinutes() +":"+ data.getSeconds();
+        vm.perfil.dataHoraInclusao =  data;
+        vm.perfil.dataHoraAlteracao =  data;
+        var obj = JSON.stringify(vm.perfil);
         HackatonStefaniniService.incluir(vm.url, obj).then(
             function (response) {
                 if (response.status == 200)
@@ -49,9 +51,8 @@ function PessoaIncluirAlterarController($rootScope, $scope, $location,
         );
     }
 
-    vm.executarAlterarPessoa = function(metodo){
-        vm.pessoa.dataNascimento = vm.formataDataJava(vm.pessoa.dataNascimento);
-        var obj = JSON.stringify(vm.pessoa);
+    vm.executarAlterarPerfil = function(){
+        var obj = JSON.stringify(vm.perfil);
         HackatonStefaniniService.alterar(vm.url, obj).then(
             function (response) {
                 if (response.status == 200)
@@ -65,7 +66,7 @@ function PessoaIncluirAlterarController($rootScope, $scope, $location,
     }
 
     vm.goToListagem = function(){
-        $location.path("listarPessoas");
+        $location.path("listarPerfis");
     }
 
     vm.formataDataJava = function(data){
@@ -80,10 +81,6 @@ function PessoaIncluirAlterarController($rootScope, $scope, $location,
         var dia = data.slice(8,10);
         var dataFormatada = dia+mes+ano;
         return dataFormatada;
-    }
-
-    vm.abrirModal = function(idPessoa){
-           $("#myModal").modal();
     }
 
 }
