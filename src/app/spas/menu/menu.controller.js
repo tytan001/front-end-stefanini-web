@@ -5,9 +5,9 @@ MenuController.$inject = ["$rootScope", "$scope", "$location",
 function MenuController($rootScope, $scope, $location,
     $q, $filter, $routeParams, HackatonStefaniniService) {
     vm = this;
-    
+
     vm.chamarPagina = function (pagina) {
-        
+
         switch (pagina) {
             case 'cadastrarPessoa':
                 $location.path("cadastrarPessoa");
@@ -18,15 +18,19 @@ function MenuController($rootScope, $scope, $location,
             case 'listarPessoa':
                 $location.path("listarPessoas");
                 break;
-                
+
             case 'cadastrarPerfil':
-            
+
                 break;
-        
+
+            case 'home':
+                $location.path("/");
+                break;
+
             default:
                 break;
         }
-        
+
         //vm.executaConsultaModelo();
     };
 
