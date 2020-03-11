@@ -27,11 +27,16 @@ function PessoaListarController($rootScope, $scope, $location,
     vm.excluir = function(id){
         HackatonStefaniniService.excluirPessoa(id).then(
             function (response) {
-                if (response.data !== undefined){
-                    alert("Excluido com sucesso!! (Provisório)")
-                }
+                vm.goToListagem("Pessoa excluída com sucesso!");
+                // if (response.data !== undefined){
+                //     alert("Excluido com sucesso!! (Provisório)")
+                // }
             }
         );
+    }
+
+    vm.goToListagem = function(){
+        $location.path("listarPessoas");
     }
 
     vm.formataDataTela = function(data){
