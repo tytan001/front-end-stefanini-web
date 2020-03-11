@@ -38,6 +38,11 @@ function PessoaIncluirAlterarController($rootScope, $scope, $location,
         }
     }
 
+    vm.abrirModal = function(idPessoa){
+        console.log("ID Pessoa: " + idPessoa);
+        $("#myModal").modal();
+    }
+
     vm.executarAlterarIncluirPessoa = function(metodo){
         vm.pessoa.dataNascimento = vm.formataDataJava(vm.pessoa.dataNascimento);
         var obj = JSON.stringify(vm.pessoa);
