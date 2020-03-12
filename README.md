@@ -24,7 +24,11 @@ CONFIG CORS BACKEND
 
 	<http-invoker security-realm="ApplicationRealm"/>
 </host>
-
+	Habilitar o método delete
+	Alterar a classe EnderecoServico.java na linha 47 para retornar uma lista, está retornando uma lista vazia 
+	public Optional<List<Endereco>> getList() {
+		return dao.getList();
+	}
 4. Incluir logo abaixo a tag </handlers> o conteúdo abaixo
 <filters>
 	<response-header name="server-header" header-name="Server" header-value="WildFly/18"/>

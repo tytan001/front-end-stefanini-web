@@ -6,58 +6,122 @@ function PessoaIncluirAlterarController($rootScope, $scope, $location,
     $q, $filter, $routeParams, HackatonStefaniniService) {
     vm = this;
     vm.pessoa = {};
+    vm.endereco = undefined;
     vm.pessoa.situacao = false;
+    vm.urlEndereco = "http://localhost:8080/treinamento/api/enderecos/";
     vm.url = "http://localhost:8080/treinamento/api/pessoas/";
     vm.init = function () {
        if($routeParams.idPessoa){
-        vm.tituloTela = "Editar Pessoa";
-        vm.acao = "Editar";
-        vm.listarPessoaId($routeParams.idPessoa);
+            vm.tituloTela = "Editar Pessoa";
+            vm.acao = "Editar";
+            vm.listarPessoaId($routeParams.idPessoa);
+            
        }else{
-        vm.tituloTela = "Cadastrar Pessoa";
-        vm.acao = "Cadastrar";
+            vm.tituloTela = "Cadastrar Pessoa";
+            vm.acao = "Cadastrar";
        }
     };
 
     vm.listarPessoaId = function (id) {
-        HackatonStefaniniService.listarId(vm.url+id).then(
+        vm.buscarObjetoPorId(vm.url+id).then(
             function (response) {
-                if (response.data !== undefined){
-                    vm.pessoa = response.data;
-                    vm.pessoa.dataNascimento = vm.formataDataTela(response.data.dataNascimento);
+                if (response !== undefined){
+                    vm.pessoa = response;
+                    vm.pessoa.dataNascimento = vm.formataDataTela(response.dataNascimento);
+                    vm.buscarListaObjetos(vm.urlEndereco).then(function(response){
+                        vm.listaEnderecos = response;
+                        vm.encontrarEnderecoPessoa();
+                    })
                 }
             }
         );
     };
 
+    vm.encontrarEnderecoPessoa = function(){
+        angular.forEach(vm.listaEnderecos, function(item){
+            if(vm.pessoa.id == item.idPessoa){
+                vm.endereco = item;
+                vm.uf = item.uf;
+            }
+        })
+    }
+
     vm.incluirAlterarPessoa = function(){
+        vm.pessoa.dataNascimento = vm.formataDataJava(vm.pessoa.dataNascimento);
         if(vm.acao == "Cadastrar"){
-            vm.executarIncluirPessoa();
+            vm.salvarObjeto(vm.url, vm.pessoa).then(
+                function (pessoaSalva) {
+                    if(vm.endereco != undefined){
+                        vm.endereco.idPessoa = pessoaSalva.id;
+                        vm.endereco.uf = vm.uf;
+                       vm.salvarObjeto(vm.urlEndereco, vm.endereco);
+                    }
+                    vm.goToListagem();
+                });
         }else if(vm.acao == "Editar"){
-            vm.executarAlterarPessoa();
+            vm.alterarObjeto(vm.url, vm.pessoa);
+                if(vm.endereco == undefined){
+                    vm.endereco.idPessoa = vm.pessoa.id;
+                    vm.endereco.uf = vm.uf;
+                    vm.salvarObjeto(vm.urlEndereco, vm.endereco);
+                    vm.goToListagem();
+                }else{
+                    vm.endereco.idPessoa = vm.pessoa.id;
+                    vm.endereco.uf = vm.uf;
+                    vm.alterarObjeto(vm.urlEndereco, vm.endereco);
+                    vm.goToListagem();
+                }
         }
     }
 
-    vm.executarIncluirPessoa = function(metodo){
-        vm.pessoa.dataNascimento = vm.formataDataJava(vm.pessoa.dataNascimento);
-        var obj = JSON.stringify(vm.pessoa);
-        HackatonStefaniniService.incluir(vm.url, obj).then(
+
+    vm.salvarObjeto = function(url, objeto){
+        var deferred = $q.defer();
+        var obj = JSON.stringify(objeto);
+        HackatonStefaniniService.incluir(url, obj).then(
             function (response) {
-                if (response.status == 200)
-                    vm.goToListagem();
+                if (response.status == 200){
+                    deferred.resolve(response.data); 
+                }
             }
         );
+        return deferred.promise;
     }
 
-    vm.executarAlterarPessoa = function(metodo){
-        vm.pessoa.dataNascimento = vm.formataDataJava(vm.pessoa.dataNascimento);
-        var obj = JSON.stringify(vm.pessoa);
-        HackatonStefaniniService.alterar(vm.url, obj).then(
+    vm.alterarObjeto = function(url, objeto){
+        var deferred = $q.defer();
+        var obj = JSON.stringify(objeto);
+        HackatonStefaniniService.alterar(url, obj).then(
             function (response) {
-                if (response.status == 200)
-                    vm.goToListagem();
+                if (response.status == 200){
+                    deferred.resolve(response.data); 
+                }
             }
         );
+        return deferred.promise;
+    }
+
+    vm.buscarObjetoPorId = function(url, id){
+        var deferred = $q.defer();
+        HackatonStefaniniService.listarId(url).then(
+            function (response) {
+                if (response.data !== undefined){
+                    deferred.resolve(response.data); 
+                }
+            }
+        );
+        return deferred.promise;
+    }
+
+    vm.buscarListaObjetos = function(url){
+        var deferred = $q.defer();
+        HackatonStefaniniService.listar(url).then(
+            function (response) {
+                if (response.data !== undefined)
+                deferred.resolve(response.data); 
+            }
+        );
+        return deferred.promise;
     }
     
     vm.cancelar = function(){
@@ -83,7 +147,46 @@ function PessoaIncluirAlterarController($rootScope, $scope, $location,
     }
 
     vm.abrirModal = function(idPessoa){
-           $("#myModal").modal();
+           $("#modalEndereco").modal();
     }
+
+    vm.limparEndereco = function(){
+        $('#modalEndereco').modal('toggle');
+        vm.endereco = undefined;
+    }
+    vm.listaUF = [
+        "RO", "AC", "AM", "RR", "PA", "AP",
+        "TO", "MA", "PI", "CE", "RN", "PB",
+        "PE", "AL", "SE", "BA", "MG", "ES",
+        "RJ", "SP", "PR", "SC", "RS", "MS",
+        "MT", "GO", "DF"
+    // {"id": "RO", "desc": "RO"},
+    // {"id": "AC", "desc": "AC"},
+    // {"id": "AM", "desc": "AM"},
+    // {"id": "RR", "desc": "RR"},
+    // {"id": "PA", "desc": "PA"},
+    // {"id": "AP", "desc": "AP"},
+    // {"id": "TO", "desc": "TO"},
+    // {"id": "MA", "desc": "MA"},
+    // {"id": "PI", "desc": "PI"},
+    // {"id": "CE", "desc": "CE"},
+    // {"id": "RN", "desc": "RN"},
+    // {"id": "PB", "desc": "PB"},
+    // {"id": "PE", "desc": "PE"},
+    // {"id": "AL", "desc": "AL"},
+    // {"id": "SE", "desc": "SE"},
+    // {"id": "BA", "desc": "BA"},
+    // {"id": "MG", "desc": "MG"},
+    // {"id": "ES", "desc": "ES"},
+    // {"id": "RJ", "desc": "RJ"},
+    // {"id": "SP", "desc": "SP"},
+    // {"id": "PR", "desc": "PR"},
+    // {"id": "SC", "desc": "SC"},
+    // {"id": "RS", "desc": "RS"},
+    // {"id": "MS", "desc": "MS"},
+    // {"id": "MT", "desc": "MT"},
+    // {"id": "GO", "desc": "GO"},
+    // {"id": "DF", "desc": "DF"}
+];
 
 }
