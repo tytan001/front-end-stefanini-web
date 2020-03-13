@@ -6,6 +6,11 @@
   myModal {
     z-index: 2147483647;
   }
+
+  .disabledDiv {
+    pointer-events: none;
+    opacity: 0.4;
+  }
 </style>
 
 <div ng-init="vm.init()">
@@ -16,98 +21,170 @@
       </div>
       <div class="form-group">
         <label for="nomePessoa">Nome: </label>
-        <input type="nome" class="form-control" id="nomePessoa" ng-model="vm.pessoa.nome"
-          placeholder="Digite o nome da pessoa ...">
+        <input
+          type="nome"
+          class="form-control"
+          id="nomePessoa"
+          ng-model="vm.pessoa.nome"
+          placeholder="Digite o nome da pessoa ..."
+        />
       </div>
       <div class="form-group">
         <label for="emailPessoa">Email</label>
-        <input type="text" class="form-control" id="emailPessoa" ng-model="vm.pessoa.email"
-          placeholder="name@example.com">
+        <input
+          type="text"
+          class="form-control"
+          id="emailPessoa"
+          ng-model="vm.pessoa.email"
+          placeholder="name@example.com"
+        />
       </div>
-      <div class="form-group">
-        <label for="nascimentoPessoa">Data de nascimento</label>
-        <input type="text" class="form-control" id="nascimentoPessoa" ng-model="vm.pessoa.dataNascimento"
-          ui-mask="99/99/9999" style="width: 120px;">
+      <div class="row">
+        <div class="form-group">
+          <label for="nascimentoPessoa" style="width: 250px;"
+            >Data de nascimento</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="nascimentoPessoa"
+            ng-model="vm.pessoa.dataNascimento"
+            ui-mask="99/99/9999"
+            style="width: 120px;"
+          />
+        </div>
+        <div class="form-group">
+          <label for="nomePerfil">Perfil</label>
+          <select
+            style="width: 150px;"
+            class="form-control"
+            ng-options="item as item.nome for item in vm.listaPerfil track by item.id"
+            ng-model="vm.perfil"
+            ng-disabled="vm.listaPerfil === undefined "
+          ></select>
+        </div>
       </div>
+
       <div class="form-check">
-        <input class="form-check-input" ng-checked="vm.pessoa.situacao"
-          ng-click="vm.pessoa.situacao = !vm.pessoa.situacao" type="checkbox" id="defaultCheck1">
+        <input
+          class="form-check-input"
+          ng-checked="vm.pessoa.situacao"
+          ng-click="vm.pessoa.situacao = !vm.pessoa.situacao"
+          type="checkbox"
+          id="defaultCheck1"
+        />
         <label class="form-check-label" for="defaultCheck1">
           Situação
         </label>
       </div>
-      <div class="row" style="float: left;">
-        <button type="button" class="btn btn-primary btn-space" ng-click="vm.abrirModal(vm.pessoa.id)">Endereço</button>
+      <div>
+        <div style="text-align: right;">
+          <img
+            ng-class="{'disabledDiv': vm.endereco !== undefined}"
+            src="../../../app/imagens/bootstrap-icons/icons/document-richtext.svg"
+            style="cursor: pointer;"
+            alt=""
+            width="25"
+            height="25"
+            title="Incluir Endereço"
+            ng-click="vm.abrirModalEndereco(vm.pessoa.id)"
+          />
+        </div>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Cidade</th>
+              <th scope="col">UF</th>
+              <th scope="col">Logradouro</th>
+              <th scope="col">Editar</th>
+              <th scope="col">Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{vm.endereco.localidade}}</td>
+              <td>{{vm.uf}}</td>
+              <td>{{vm.endereco.logradouro}}</td>
+              <td>
+                <img
+                  ng-class="{'disabledDiv': vm.endereco === undefined}"
+                  src="../../../app/imagens/bootstrap-icons/icons/pencil.svg"
+                  style="cursor: pointer;"
+                  alt=""
+                  width="25"
+                  height="25"
+                  title="Editar"
+                  ng-click="vm.abrirModalEndereco(vm.pessoa.id)"
+                />
+              </td>
+
+              <td>
+                <img
+                  ng-class="{'disabledDiv': vm.endereco === undefined}"
+                  src="../../../app/imagens/bootstrap-icons/icons/trash.svg"
+                  style="cursor: pointer;"
+                  alt=""
+                  width="25"
+                  height="25"
+                  title="Excluir"
+                  ng-click="vm.excluir(pessoa.id)"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <div class="row" style="float: right;">
-        <button type="button" class="btn btn-primary btn-space"
-          ng-click="vm.incluirAlterarPessoa(vm.pessoa)">Salvar</button>
-        <button type="button" class="btn btn-danger" ng-click="vm.cancelar()">Cancelar</button>
+        <button
+          type="button"
+          class="btn btn-primary btn-space"
+          ng-click="vm.incluirAlterarPessoa(vm.pessoa)"
+        >
+          Salvar
+        </button>
+        <button type="button" class="btn btn-danger" ng-click="vm.cancelar()">
+          Cancelar
+        </button>
       </div>
     </form>
-</div>
-
-<div class="modal fade" id="modalEndereco" role="dialog" data-backdrop="false">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-8">
-            <div class="form-group">
-              <label for="nomeLocalidade">Cidade: </label>
-              <input type="nomeLocalidade" class="form-control" id="nomeLocalidade" ng-model="vm.endereco.localidade"
-                placeholder="">
-            </div>
-          </div>
-          <div class="col">
-            <div class="form-group">
-              <label for="nomeUF">UF: </label>
-              <select class="custom-select custom-select-sm" 
-                ng-model="vm.uf" ng-options="uf for uf in vm.listaUF">
-                <option value="">-- UF --</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-8">
-            <div class="form-group">
-              <label for="nomeLogradouro">Logradouro: </label>
-              <input type="nomeLogradouro" class="form-control" id="nomeLogradouro" ng-model="vm.endereco.logradouro"
-                placeholder="">
-            </div>
-          </div>
-          <div class="col">
-            <div class="form-group">
-              <label for="nomeCep">CEP: </label>
-              <input type="nomeCep" class="form-control" id="nomeCep" ng-model="vm.endereco.cep"
-                placeholder="">
-            </div>
-          </div>
-        </div>
-      
-      <div class="form-group">
-        <label for="nomeBairro">Bairro: </label>
-        <input type="nomeBairro" class="form-control" id="nomeBairro" ng-model="vm.endereco.bairro"
-          placeholder="">
-      </div>
-
-    <div class="form-group">
-      <label for="nomeComplemento">Complemento: </label>
-      <input type="nomeComplemento" class="form-control" id="nomeComplemento" ng-model="vm.endereco.complemento"
-        placeholder="">
-      </div>
-
   </div>
 
+  <div
+    class="modal fade"
+    id="modalEndereco"
+    role="dialog"
+    data-backdrop="false"
+  >
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <div
+            ng-include="'app/spas/endereco/template/endereco-incluir-alterar.tpl.html'"
+          ></div>
+        </div>
 
-      <div class="modal-footer">
-      <button type="button" class="btn btn-primary btn-space"  data-dismiss="modal">Salvar</button>
-      <button type="button" class="btn btn-danger" ng-click="vm.limparEndereco()">Cancelar</button>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-primary btn-space"
+            data-dismiss="modal"
+          >
+            Salvar
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            ng-click="vm.limparEndereco()"
+          >
+            Cancelar
+          </button>
+        </div>
       </div>
     </div>
   </div>

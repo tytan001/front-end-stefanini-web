@@ -40,8 +40,10 @@ function PerfilIncluirAlterarController($rootScope, $scope, $location,
         // var mes = data.getMonth()+1;
         // //data.getDate()+ "/"+ mes +"/"+ data.getFullYear() +" - "+ data.getHours() +":"+ data.getMinutes() +":"+ data.getSeconds();
         // var dataFormatadaJava =  data.getFullYear()+"-"+mes+"-"+data.getDate()+" "+ data.getHours() +":"+ data.getMinutes() +":"+ data.getSeconds();
-        vm.perfil.dataHoraInclusao =  data;
-        vm.perfil.dataHoraAlteracao =  data;
+        if (vm.perfil.id === undefined)
+            vm.perfil.dataHoraInclusao =  data;
+        if (vm.perfil.id !== undefined)
+            vm.perfil.dataHoraAlteracao =  data;
         var obj = JSON.stringify(vm.perfil);
         HackatonStefaniniService.incluir(vm.url, obj).then(
             function (response) {

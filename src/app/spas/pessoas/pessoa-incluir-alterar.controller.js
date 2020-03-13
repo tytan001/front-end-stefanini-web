@@ -9,6 +9,7 @@ function PessoaIncluirAlterarController($rootScope, $scope, $location,
     vm.endereco = undefined;
     vm.pessoa.situacao = false;
     vm.urlEndereco = "http://localhost:8080/treinamento/api/enderecos/";
+    vm.urlPerfil = "http://localhost:8080/treinamento/api/perfils/";
     vm.url = "http://localhost:8080/treinamento/api/pessoas/";
     vm.init = function () {
        if($routeParams.idPessoa){
@@ -20,6 +21,14 @@ function PessoaIncluirAlterarController($rootScope, $scope, $location,
             vm.tituloTela = "Cadastrar Pessoa";
             vm.acao = "Cadastrar";
        }
+      
+       vm.listarPerfis(vm.urlPerfil).then(
+        function (response) {
+            if (response !== undefined){
+                vm.listaPerfil = response;
+            }
+        }
+    );
     };
 
     vm.listarPessoaId = function (id) {
@@ -28,23 +37,14 @@ function PessoaIncluirAlterarController($rootScope, $scope, $location,
                 if (response !== undefined){
                     vm.pessoa = response;
                     vm.pessoa.dataNascimento = vm.formataDataTela(response.dataNascimento);
-                    vm.buscarListaObjetos(vm.urlEndereco).then(function(response){
-                        vm.listaEnderecos = response;
-                        vm.encontrarEnderecoPessoa();
+                    vm.burcarEnderecoPessoa(vm.urlEndereco+id).then(function(response){
+                        vm.endereco = response;
+                        vm.uf = response.uf;
                     })
                 }
             }
         );
     };
-
-    vm.encontrarEnderecoPessoa = function(){
-        angular.forEach(vm.listaEnderecos, function(item){
-            if(vm.pessoa.id == item.idPessoa){
-                vm.endereco = item;
-                vm.uf = item.uf;
-            }
-        })
-    }
 
     vm.incluirAlterarPessoa = function(){
         vm.pessoa.dataNascimento = vm.formataDataJava(vm.pessoa.dataNascimento);
@@ -74,6 +74,17 @@ function PessoaIncluirAlterarController($rootScope, $scope, $location,
         }
     }
 
+    vm.listarPerfis = function(){
+        var deferred = $q.defer();
+        HackatonStefaniniService.listarId(vm.urlPerfil).then(
+            function (response) {
+                if (response.data !== undefined){
+                    deferred.resolve(response.data); 
+                }
+            }
+        );
+        return deferred.promise;
+    }
 
     vm.salvarObjeto = function(url, objeto){
         var deferred = $q.defer();
@@ -113,7 +124,7 @@ function PessoaIncluirAlterarController($rootScope, $scope, $location,
         return deferred.promise;
     }
 
-    vm.buscarListaObjetos = function(url){
+    vm.burcarEnderecoPessoa = function(url){
         var deferred = $q.defer();
         HackatonStefaniniService.listar(url).then(
             function (response) {
@@ -146,7 +157,7 @@ function PessoaIncluirAlterarController($rootScope, $scope, $location,
         return dataFormatada;
     }
 
-    vm.abrirModal = function(idPessoa){
+    vm.abrirModalEndereco = function(idPessoa){
            $("#modalEndereco").modal();
     }
 
@@ -154,6 +165,7 @@ function PessoaIncluirAlterarController($rootScope, $scope, $location,
         $('#modalEndereco').modal('toggle');
         vm.endereco = undefined;
     }
+
     vm.listaUF = [
         "RO", "AC", "AM", "RR", "PA", "AP",
         "TO", "MA", "PI", "CE", "RN", "PB",

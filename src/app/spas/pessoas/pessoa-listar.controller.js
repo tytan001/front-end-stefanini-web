@@ -17,7 +17,10 @@ function PessoaListarController($rootScope, $scope, $location,
     };
 
     vm.editar = function(id){
-        $location.path("EditarPessoas/"+id);
+        if (id !== undefined)
+            $location.path("EditarPessoas/"+id);
+        else 
+            $location.path("cadastrarPessoa");
     }
 
     vm.excluir = function(id){

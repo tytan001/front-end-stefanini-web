@@ -16,8 +16,25 @@ function PerfisListarController($rootScope, $scope, $location,
         );
     };
 
+    vm.dataFormat = function (dateObj){
+        
+        if (dateObj === undefined)
+            return "";
+
+        var dt = dateObj.toLocaleString('pt-BR');
+        var hora = dt.split("-")[2].split("T")[1].substring(0,5);
+        var dia = dt.split("-")[2].split("T")[0];
+        var mes = dt.split("-")[1];
+        var ano = dt.split("-")[0];
+
+        return dia + "/" + mes + "/" + ano + " - " + hora;
+    };
+
     vm.editar = function(id){
-        $location.path("EditarPerfis/"+id);
+        if (id !== undefined)
+            $location.path("EditarPerfis/"+id);
+        else 
+            $location.path("EditarPerfis");
     }
 
     vm.excluir = function(id){

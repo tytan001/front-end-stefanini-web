@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-8">
+    <div class="form-group">
+      <label for="nomeLocalidade">Cidade: </label>
+      <input
+        type="nomeLocalidade"
+        class="form-control"
+        id="nomeLocalidade"
+        ng-model="vm.endereco.localidade"
+        placeholder=""
+      />
+    </div>
+  </div>
+  <div class="col">
+    <div class="form-group">
+      <label for="nomeUF">UF: </label>
+      <select
+        class="custom-select custom-select-sm"
+        ng-model="vm.uf"
+        ng-options="uf for uf in vm.listaUF"
+      >
+        <option value="">-- UF --</option>
+      </select>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-8">
+    <div class="form-group">
+      <label for="nomeLogradouro">Logradouro: </label>
+      <input
+        type="nomeLogradouro"
+        class="form-control"
+        id="nomeLogradouro"
+        ng-model="vm.endereco.logradouro"
+        placeholder=""
+      />
+    </div>
+  </div>
+  <div class="col">
+    <div class="form-group">
+      <label for="nomeCep">CEP: </label>
+      <input
+        type="nomeCep"
+        class="form-control"
+        id="nomeCep"
+        ng-model="vm.endereco.cep"
+        placeholder=""
+      />
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="nomeBairro">Bairro: </label>
+  <input
+    type="nomeBairro"
+    class="form-control"
+    id="nomeBairro"
+    ng-model="vm.endereco.bairro"
+    placeholder=""
+  />
+</div>
+
+<div class="form-group">
+  <label for="nomeComplemento">Complemento: </label>
+  <input
+    type="nomeComplemento"
+    class="form-control"
+    id="nomeComplemento"
+    ng-model="vm.endereco.complemento"
+    placeholder=""
+  />
+</div>

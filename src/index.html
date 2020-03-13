@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html>
-<style>
+  <style>
     .background-principal {
-        background: url(app/assets/InnovationHeader.jpg) no-repeat center center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
+      background: url(app/assets/InnovationHeader.jpg) no-repeat center center
+        fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
     }
-</style>
+  </style>
 
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Hackaton Stefanini</title>
     <!-- start-html-test-code -->
     <!-- A porta abaixo deve ser a mesma especificada no arquivo Gruntfile -> watch -> options -> livereload -->
@@ -21,13 +22,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-utils/0.1.1/angular-ui-utils.min.js"></script>
+
     <script src="app/stefanini/stefanini.filters.js"></script>
     <script src="app/spas/hackaton-stefanini.module.js"></script>
     <script src="app/spas/hackaton-stefanini.route.js"></script>
@@ -41,17 +44,25 @@
     <script src="app/spas/perfil/perfil-listar.controller.js"></script>
 
     <!-- end-html-test-code -->
+  </head>
 
-</head>
-
-<body ng-app="hackaton-stefanini" class="background-principal">
+  <body ng-app="hackaton-stefanini" class="background-principal">
     <div class="container">
-        <h1 style="text-align:center; width: 100%; font-family: 'Courier New', 'Monaco', 'monospace'; font-size: 14; font-weight: bold; color: white; padding-top: 10px;">Hackaton Stefanini Solutions</h1>
+      <h1
+        style="text-align:center; width: 100%; font-family: 'Courier New', 'Monaco', 'monospace'; font-size: 14; font-weight: bold; color: white; padding-top: 10px;"
+      >
+        Hackaton Stefanini Solutions
+      </h1>
     </div>
-    <div ng-include="'app/spas/menu/template/menu.tpl.html'" style="width: 100%; padding-left: 10px;"></div>
+    <div
+      ng-include="'app/spas/menu/template/menu.tpl.html'"
+      style="width: 100%; padding-left: 10px;"
+    ></div>
     <div class="container">
-        <div ng-view style="background-color: #ffffff !important; opacity: 90%; height: 425px !important; width: 900px !important; margin:0 auto; border: 2px solid white; padding: 10px; border-radius: 25px;"></div>
+      <div
+        ng-view
+        style="background-color: #ffffff !important; opacity: 90%; height: 450px !important; width: 900px !important; margin:0 auto; border: 2px solid white; padding: 10px; border-radius: 25px;"
+      ></div>
     </div>
-</body>
-
+  </body>
 </html>
