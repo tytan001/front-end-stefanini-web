@@ -1,3 +1,10 @@
+<style>
+  .disabledDiv {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+</style>
+
 <div ng-init="vm.init()">
   <div class="container">
     <div
@@ -25,7 +32,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="pessoa in vm.listaPessoas">
+        <tr ng-repeat="pessoa in vm.listaPessoasMostrar">
           <td>{{pessoa.id}}</td>
           <td>{{pessoa.nome}}</td>
           <td>{{pessoa.email}}</td>
@@ -56,4 +63,11 @@
       </tbody>
     </table>
   </div>
+  <nav class="row" style="float: right; padding-right: 20px;">
+    <ul class="pagination">
+      <li ng-class="{'page-item': true, 'disabledDiv': vm.currentPage === 1}"><a class="page-link" ng-click="vm.retrocederPaginanacao()">Anterior</a></li>
+      <li ng-class="{'page-item': true, 'disabledDiv': vm.currentPage === $index + 1}" ng-repeat="i in vm.qdePaginacao track by $index"><a class="page-link" ng-click="vm.atualizarPaginanacao($index)">{{$index + 1}}</a></li>
+      <li ng-class="{'page-item': true, 'disabledDiv': vm.currentPage === vm.qdePaginacao.length}"><a class="page-link" ng-click="vm.avancarPaginanacao()">Próximo</a></li>
+    </ul>
+  </nav>      
 </div>

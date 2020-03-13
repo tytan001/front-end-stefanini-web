@@ -31,9 +31,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-utils/0.1.1/angular-ui-utils.min.js"></script>
 
-    <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css">
-    <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
-
+    <script src="https://cdn.rawgit.com/esvit/ng-table/1.0.0/dist/ng-table.js"></script>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/esvit/ng-table/1.0.0/dist/ng-table.css">
     <script src="app/stefanini/stefanini.filters.js"></script>
     <script src="app/spas/hackaton-stefanini.module.js"></script>
     <script src="app/spas/hackaton-stefanini.route.js"></script>
@@ -64,7 +63,7 @@
     <div class="container">
       <div
         ng-view
-        style="background-color: #ffffff !important; opacity: 90%; height: 450px !important; width: 900px !important; margin:0 auto; border: 2px solid white; padding: 10px; border-radius: 25px;"
+        style="overflow-y: auto; overflow-x: hidden; background-color: #ffffff !important; opacity: 90%; height: 450px !important; width: 900px !important; margin:0 auto; border: 2px solid white; padding: 10px; border-radius: 25px;"
       ></div>
     </div>
   </body>
