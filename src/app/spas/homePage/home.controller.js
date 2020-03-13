@@ -7,7 +7,7 @@ function HomeController($rootScope, $scope, $location,
     vm = this;
     vm.ola = "Olá Mundo!!!";
 
-    vm.goToListagem = function () {
+    vm.retornarTelaListagem = function () {
         //$location.path("listagem/100000");
         vm.executaConsultaModelo();
     };

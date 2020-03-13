@@ -37,15 +37,15 @@ function PerfisListarController($rootScope, $scope, $location,
             $location.path("EditarPerfis");
     }
 
-    vm.excluir = function(id){
+    vm.remover = function(id){
         HackatonStefaniniService.excluir(vm.url+id).then(
             function (response) {
-                vm.goToListagem();
+                vm.init();
             }
         );
     }
 
-    vm.goToListagem = function(){
+    vm.retornarTelaListagem = function(){
         $location.path("listarPerfis");
     }
 
