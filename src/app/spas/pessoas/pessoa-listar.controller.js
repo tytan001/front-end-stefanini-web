@@ -6,8 +6,9 @@ function PessoaListarController($rootScope, $scope, $location,
     $q, $filter, $routeParams, HackatonStefaniniService) {
     vm = this;
 
-    vm.qdePorPagina = 5;
+    vm.qdePorPagina = 2;
     vm.ultimoIndex = 0;
+    vm.contador = 0;
 
     vm.url = "http://localhost:8080/treinamento/api/pessoas/";
     vm.urlEndereco = "http://localhost:8080/treinamento/api/enderecos/";
@@ -44,38 +45,43 @@ function PessoaListarController($rootScope, $scope, $location,
 
     vm.atualizarPaginanacao = function (index) {
 
+        if (index >= vm.currentPage)
+            vm.avancarPaginanacao(index);
+        else
+            vm.retrocederPaginanacao(index);
+    };
+
+    vm.avancarPaginanacao = function (index) {
+        
         vm.listaPessoasMostrar = [];
+        vm.currentPage++;
 
-        if (index >= vm.currentPage) {
-            vm.currentPage++;
-            vm.contador = 0;
-
-            var idx = angular.copy(vm.ultimoIndex);
-            for (var count = vm.listaPessoas.length - vm.qdePorPagina; count > 0; count--) {
-                vm.listaPessoasMostrar.push(vm.listaPessoas[idx++]);
-                vm.ultimoIndex++;
-                vm.contador++;
-            }
-        } else {
-            vm.currentPage--;
-            var idx = vm.listaPessoas.length - vm.contador - 1;
-            vm.ultimoIndex = idx + 1;
-            for (var count = vm.qdePorPagina; count > 0; count--) {
-                vm.listaPessoasMostrar.push(vm.listaPessoas[idx--]);
-                vm.contador--;
-            }
+        var idx = angular.copy(vm.ultimoIndex);
+        var cont = vm.listaPessoas.length - vm.qdePorPagina;
+        for (var count = cont > vm.qdePorPagina ? vm.qdePorPagina : cont; count > 0; count--) {
+            vm.listaPessoasMostrar.push(vm.listaPessoas[idx++]);
+            vm.ultimoIndex++;
+            vm.contador++;
         }
         vm.listaPessoasMostrar.sort(function (a, b) {
             return a.id - b.id;
         });
     };
 
-    vm.avancarPaginanacao = function () {
-        vm.currentPage++;
-    };
+    vm.retrocederPaginanacao = function (index) {
+        
+        vm.listaPessoasMostrar = [];
 
-    vm.retrocederPaginanacao = function () {
         vm.currentPage--;
+        var idx = vm.contador - 1;
+        vm.ultimoIndex = idx + 1;
+        for (var count = vm.qdePorPagina; count > 0; count--) {
+            vm.listaPessoasMostrar.push(vm.listaPessoas[idx--]);
+            vm.contador--;
+        }
+        vm.listaPessoasMostrar.sort(function (a, b) {
+            return a.id - b.id;
+        });
     };
 
     vm.editar = function (id) {
