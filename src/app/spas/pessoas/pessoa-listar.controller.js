@@ -6,7 +6,7 @@ function PessoaListarController($rootScope, $scope, $location,
     $q, $filter, $routeParams, HackatonStefaniniService) {
     vm = this;
 
-    vm.qdePorPagina = 2;
+    vm.qdePorPagina = 5;
     vm.ultimoIndex = 0;
     vm.contador = 0;
 
