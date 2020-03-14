@@ -20,7 +20,15 @@ function PessoaIncluirAlterarController(
     /**ATRIBUTOS DA TELA */
     vm = this;
 
-    vm.pessoa = {};
+    vm.pessoa = {
+        id: null,
+        nome: "",
+        email: "",
+        dataNascimento: null,
+        enderecos: [],
+        perfils: [],
+        situacao: false
+    };
     vm.enderecoDefault = {
         id: null,
         idPessoa: null,
@@ -31,8 +39,6 @@ function PessoaIncluirAlterarController(
         logradouro: "",
         complemento: ""
     };
-
-    vm.pessoa.situacao = false;
 
     vm.urlEndereco = "http://localhost:8080/treinamento/api/enderecos/";
     vm.urlPerfil = "http://localhost:8080/treinamento/api/perfils/";
@@ -109,7 +115,16 @@ function PessoaIncluirAlterarController(
 
         objetoDados.enderecos = listaEndereco;
         if (vm.perfil !== null){
-            objetoDados.perfils.push(vm.perfil);
+
+            var isNovoPerfil = true;
+            
+            angular.forEach(objetoDados.perfils, function (value, key) {
+                if (value.id === vm.perfil.id) {
+                    isNovoPerfil = false;
+                }
+            });
+            if (isNovoPerfil)
+                objetoDados.perfils.push(vm.perfil);
         }
         if (vm.acao == "Cadastrar") {
 

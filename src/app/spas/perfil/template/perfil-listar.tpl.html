@@ -20,14 +20,14 @@
           <th scope="col">Id</th>
           <th scope="col">Nome</th>
           <th scope="col">Descricao</th>
-          <th scope="col">Data/Hora Inclusão</th>
-          <th scope="col">Data/Hora Alteração</th>
+          <th scope="col">Data Incl.</th>
+          <th scope="col">Data Alte.</th>
           <th scope="col">Editar</th>
           <th scope="col">Excluir</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="perfil in vm.listaPerfis">
+        <tr ng-repeat="perfil in vm.listaPerfisMostrar">
           <td>{{perfil.id}}</td>
           <td>{{perfil.nome}}</td>
           <td>{{perfil.descricao}}</td>
@@ -62,4 +62,24 @@
       </tbody>
     </table>
   </div>
+  <nav class="row" style="float: right; padding-right: 20px;">
+    <ul class="pagination">
+      <li ng-class="{'page-item': true, 'disabledDiv': vm.currentPage === 1}">
+        <a class="page-link" ng-click="vm.retrocederPaginanacao()">Anterior</a>
+      </li>
+      <li
+        ng-class="{'page-item': true, 'disabledDiv': vm.currentPage === $index + 1}"
+        ng-repeat="i in vm.qdePaginacao track by $index"
+      >
+        <a class="page-link" ng-click="vm.atualizarPaginanacao($index)"
+          >{{$index + 1}}</a
+        >
+      </li>
+      <li
+        ng-class="{'page-item': true, 'disabledDiv': vm.currentPage === vm.qdePaginacao.length}"
+      >
+        <a class="page-link" ng-click="vm.avancarPaginanacao()">Próximo</a>
+      </li>
+    </ul>
+  </nav>
 </div>

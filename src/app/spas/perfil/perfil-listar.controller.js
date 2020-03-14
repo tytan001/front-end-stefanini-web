@@ -5,15 +5,69 @@ PerfisListarController.$inject = ["$rootScope", "$scope", "$location",
 function PerfisListarController($rootScope, $scope, $location,
     $q, $filter, $routeParams, HackatonStefaniniService) {
     vm = this;
+    
+    vm.qdePorPagina = 4;
+    vm.ultimoIndex = 0;
+
     vm.url = "http://localhost:8080/treinamento/api/perfils/";
    
     vm.init = function () {
         HackatonStefaniniService.listar(vm.url).then(
             function (response) {
-                if (response.data !== undefined)
+                if (response.data !== undefined){
                     vm.listaPerfis = response.data;
+                    vm.listaPerfisMostrar = [];
+                    var max = vm.listaPerfis.length > vm.qdePorPagina ? vm.qdePorPagina : vm.listaPerfis.length;
+
+                    vm.qdePaginacao = new Array(vm.listaPerfis.length % vm.qdePorPagina === 0 ? vm.listaPerfis.length / vm.qdePorPagina : parseInt(vm.listaPerfis.length / vm.qdePorPagina) + 1);
+                    vm.currentPage = 1;
+                    for (var count = 0; count < max; count++) {
+                        vm.listaPerfisMostrar.push(vm.listaPerfis[count]);
+                        vm.ultimoIndex++;
+                    }
+
+                    vm.listaPerfisMostrar.sort(function (a, b) {
+                        return a.id - b.id;
+                    });
+                }
             }
         );
+    };
+
+    vm.atualizarPaginanacao = function (index) {
+
+        vm.listaPerfisMostrar = [];
+
+        if (index >= vm.currentPage) {
+            vm.currentPage++;
+            vm.contador = 0;
+
+            var idx = angular.copy(vm.ultimoIndex);
+            for (var count = vm.listaPerfis.length - vm.qdePorPagina; count > 0; count--) {
+                vm.listaPerfisMostrar.push(vm.listaPerfis[idx++]);
+                vm.ultimoIndex++;
+                vm.contador++;
+            }
+        } else {
+            vm.currentPage--;
+            var idx = vm.listaPerfis.length - vm.contador - 1;
+            vm.ultimoIndex = idx + 1;
+            for (var count = vm.qdePorPagina; count > 0; count--) {
+                vm.listaPerfisMostrar.push(vm.listaPerfis[idx--]);
+                vm.contador--;
+            }
+        }
+        vm.listaPerfisMostrar.sort(function (a, b) {
+            return a.id - b.id;
+        });
+    };
+
+    vm.avancarPaginanacao = function () {
+        vm.currentPage++;
+    };
+
+    vm.retrocederPaginanacao = function () {
+        vm.currentPage--;
     };
 
     vm.dataFormat = function (dateObj){
