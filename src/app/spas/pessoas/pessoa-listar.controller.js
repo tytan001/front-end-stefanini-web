@@ -6,9 +6,8 @@ function PessoaListarController($rootScope, $scope, $location,
     $q, $filter, $routeParams, HackatonStefaniniService) {
     vm = this;
 
-    vm.qdePorPagina = 3;
+    vm.qdePorPagina = 5;
     vm.ultimoIndex = 0;
-    vm.primeiroIndex = 0;
 
     vm.url = "http://localhost:8080/treinamento/api/pessoas/";
     vm.urlEndereco = "http://localhost:8080/treinamento/api/enderecos/";
@@ -26,8 +25,12 @@ function PessoaListarController($rootScope, $scope, $location,
                 vm.currentPage = 1;
                 for (var count = 0; count < max; count++) {
                     vm.listaPessoasMostrar.push(vm.listaPessoas[count]);
-                    vm.ultimoIndex = count;
+                    vm.ultimoIndex++;
                 }
+
+                vm.listaPessoasMostrar.sort(function (a, b) {
+                    return a.id - b.id;
+                });
 
                 HackatonStefaniniService.listar(vm.urlEndereco).then(
                     function (responseEndereco) {
@@ -41,25 +44,30 @@ function PessoaListarController($rootScope, $scope, $location,
 
     vm.atualizarPaginanacao = function (index) {
 
-
         vm.listaPessoasMostrar = [];
 
         if (index >= vm.currentPage) {
             vm.currentPage++;
+            vm.contador = 0;
 
-            var max = vm.ultimoIndex + 1 + vm.qdePorPagina;
-            for (var count = vm.ultimoIndex + 1; count < max; count++) {
-                vm.listaPessoasMostrar.push(vm.listaPessoas[count]);
-                vm.ultimoIndex = count;
+            var idx = angular.copy(vm.ultimoIndex);
+            for (var count = vm.listaPessoas.length - vm.qdePorPagina; count > 0; count--) {
+                vm.listaPessoasMostrar.push(vm.listaPessoas[idx++]);
+                vm.ultimoIndex++;
+                vm.contador++;
             }
         } else {
             vm.currentPage--;
-
-            for (var count =  vm.qdePorPagina; count > 0; count--) {
-                vm.listaPessoasMostrar.push(vm.listaPessoas[vm.ultimoIndex-count]);
-                vm.ultimoIndex = count;
+            var idx = vm.listaPessoas.length - vm.contador - 1;
+            vm.ultimoIndex = idx + 1;
+            for (var count = vm.qdePorPagina; count > 0; count--) {
+                vm.listaPessoasMostrar.push(vm.listaPessoas[idx--]);
+                vm.contador--;
             }
         }
+        vm.listaPessoasMostrar.sort(function (a, b) {
+            return a.id - b.id;
+        });
     };
 
     vm.avancarPaginanacao = function () {
