@@ -22,6 +22,19 @@
                 templateUrl: 'app/spas/pessoas/template/pessoa-incluir-alterar.tpl.html',
                 controller: 'PessoaIncluirAlterarController as vm'
             })
+            /** Rotas para Perfil */
+            .when('/listarPerfis', {
+                templateUrl: 'app/spas/perfil/template/perfil-listar.tpl.html',
+                controller: 'PerfilListarController as vm'
+            })
+            .when('/EditarPerfis/:idPerfil', {
+                templateUrl: 'app/spas/perfil/template/perfil-incluir-alterar.tpl.html',
+                controller: 'PerfilIncluirAlterarController as vm'
+            })
+            .when('/cadastrarPerfil', {
+                templateUrl: 'app/spas/perfil/template/perfil-incluir-alterar.tpl.html',
+                controller: 'PerfilIncluirAlterarController as vm'
+            })
             
             .otherwise({
                 templateUrl: 'index_ERROR.html'
