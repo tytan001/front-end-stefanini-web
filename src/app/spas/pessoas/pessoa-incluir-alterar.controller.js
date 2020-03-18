@@ -87,18 +87,24 @@ function PessoaIncluirAlterarController(
     vm.abrirModal = function (endereco) {
 
         vm.enderecoModal = vm.enderecoDefault;
-        if (endereco !== undefined)
+        
+        if (endereco !== undefined){
+            vm.tituloTelaEndereco = "Editar Endereço";
             vm.enderecoModal = endereco;
 
-        if (vm.pessoa.enderecos.length === 0)
-            vm.pessoa.enderecos.push(vm.enderecoModal);
+            if (vm.pessoa.enderecos.length === 0)
+                vm.pessoa.enderecos.push(vm.enderecoModal);
+
+        } else if (endereco === undefined){
+            vm.tituloTelaEndereco = "Cadastrar Endereço";
+            vm.enderecoModal = undefined;
+        }
 
         $("#modalEndereco").modal();
     };
 
     vm.limparTela = function () {
         $("#modalEndereco").modal("toggle");
-        vm.endereco = undefined;
     };
 
     vm.incluir = function () {
@@ -125,7 +131,9 @@ function PessoaIncluirAlterarController(
             });
             if (isNovoPerfil)
                 objetoDados.perfils.push(vm.perfil);
-        }
+        } else
+            objetoDados.perfils = [];
+
         if (vm.acao == "Cadastrar") {
 
             vm.salvar(vm.urlPessoa, objetoDados).then(
@@ -150,6 +158,30 @@ function PessoaIncluirAlterarController(
             function (ojetoRetorno) {
                 vm.retornarTelaListagem();
             });
+    };
+
+    /**METODOS DA MODAL */
+    vm.incluirEndereco = function (endereco) {
+        var objetoDados = angular.copy(endereco);
+        
+        if(vm.pessoa.id !== null){
+            objetoDados.idPessoa = vm.pessoa.id
+        
+            if (vm.acao == "Cadastrar") {
+                vm.salvar(vm.urlEndereco, objetoDados).then(
+                    function (pessoaRetorno) {
+                        vm.retornarTelaListagem();
+                    });
+            } else if (vm.acao == "Editar") {
+                vm.alterar(vm.urlEndereco, objetoDados).then(
+                    function (pessoaRetorno) {
+                        vm.retornarTelaListagem();
+                    });
+            }
+        } else {
+            vm.pessoa.enderecos.push(angular.copy(endereco));
+            vm.limparTela;
+        }
     };
 
     /**METODOS DE SERVICO */

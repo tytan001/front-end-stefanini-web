@@ -1,0 +1,95 @@
+<style>
+  .btn-space {
+    margin-right: 10px;
+  }
+
+  myModal {
+    z-index: 2147483647;
+  }
+
+  .disabledDiv {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  #ufDiv{
+    margin-left: 80px;
+  }
+</style>
+
+<div ng-init="vm.init()">
+  <div
+    class="container"
+    style="overflow-y: auto; overflow-x: hidden; height: 425px"
+  >
+    <form>
+      <div class="mx-auto" style="width: 200px;">
+        <h5 class="modal-title">{{vm.tituloTelaEndereco}}</h5>
+      </div>
+      <div class="form-group">
+        <label for="cepEndereco">Cep: </label>
+        <input
+          type="nome"
+          class="form-control"
+          id="cepEndereco"
+          ng-model="vm.enderecoModal.cep"
+          placeholder="Digite o cep"
+        />
+      </div>
+      <div class="form-group">
+        <label for="logradouroEndereco">Logradouro: </label>
+        <input
+          type="nome"
+          class="form-control"
+          id="logradouroEndereco"
+          ng-model="vm.enderecoModal.logradouro"
+          placeholder="Digite o logradouro"
+        />
+      </div>
+      <div class="form-group">
+        <label for="complementoEndereco">Complemento</label>
+        <textarea
+          rows="3"
+          class="form-control"
+          id="complementoEndereco"
+          ng-model="vm.enderecoModal.complemento"
+          placeholder="Digite o complemento"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="bairroEndereco">Bairro: </label>
+        <input
+          type="nome"
+          class="form-control"
+          id="bairroEndereco"
+          ng-model="vm.enderecoModal.bairro"
+          placeholder="Digite o bairro"
+        />
+      </div>
+      <div class="row" style="padding-left: 15px;">
+        <div class="form-group">
+          <label for="cidadeEndereco">Cidade: </label>
+          <input
+            type="nome"
+            class="form-control"
+            id="cidadeEndereco"
+            ng-model="vm.enderecoModal.localidade"
+            placeholder="Digite o nome da cidade"
+          />
+        </div>
+
+        <div class="form-group" id="ufDiv">
+          <label for="ufEndereco">UF: </label>
+          <input
+            type="nome"
+            class="form-control"
+            id="ufEndereco"
+            ng-model="vm.enderecoModal.uf"
+            placeholder="UF"
+            maxlength="2"
+            size="4"
+          />
+        </div>        
+      </div>
+    </form>
+  </div>
+</div>

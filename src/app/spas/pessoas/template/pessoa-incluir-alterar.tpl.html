@@ -33,7 +33,7 @@
         />
       </div>
       <div class="form-group">
-        <label for="emailPessoa">Email</label>
+        <label for="emailPessoa">Email: </label>
         <input
           type="text"
           class="form-control"
@@ -42,7 +42,7 @@
           placeholder="name@example.com"
         />
       </div>
-      <div class="row">
+      <div class="row" style="padding-left: 15px;">
         <div class="form-group">
           <label for="nascimentoPessoa" style="width: 250px;"
             >Data de nascimento</label
@@ -182,6 +182,7 @@
             type="button"
             class="btn btn-primary btn-space"
             data-dismiss="modal"
+            ng-click="vm.incluirEndereco(vm.enderecoModal)"
           >
             Salvar
           </button>

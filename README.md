@@ -40,3 +40,5 @@ CONFIG CORS BACKEND
 	<response-header name="Access-Control-Max-Age" header-name="Access-Control-Max-Age" header-value="1"/>
 </filters>
 
+Opcional meu(Yan)
+Para rodas o comando "grunt --force" pelo terminal do VSCode, basta executar com adm e utilizar o comando "Set-ExecutionPolicy Unrestricted " para voltar ao normal, executar o comando "Set-ExecutionPolicy Restricted"
