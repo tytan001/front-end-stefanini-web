@@ -49,6 +49,10 @@ function PerfilIncluirAlterarController(
                     }
                 }
             );
+        } else {
+            // document.getElementById("inclusaoPerfil").hidden = true;
+            // document.getElementById("alteracaoPerfil").hidden = true;
+            document.getElementById("divDataInclusaoAlteracao").hidden = true;
         }
 
     };
