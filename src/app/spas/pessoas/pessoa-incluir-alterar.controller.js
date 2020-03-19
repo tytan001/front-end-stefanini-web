@@ -39,6 +39,7 @@ function PessoaIncluirAlterarController(
         logradouro: "",
         complemento: ""
     };
+    vm.enderecos = vm.pessoa.enderecos;
 
     vm.urlEndereco = "http://localhost:8080/treinamento/api/enderecos/";
     vm.urlPerfil = "http://localhost:8080/treinamento/api/perfils/";
@@ -111,41 +112,57 @@ function PessoaIncluirAlterarController(
         vm.pessoa.dataNascimento = vm.formataDataJava(vm.pessoa.dataNascimento);
 
         var objetoDados = angular.copy(vm.pessoa);
+
+        if (vm.acao == "Cadastrar") {
+            objetoDados.enderecos = [];
+            objetoDados.perfils = [];
+
+            vm.salvar(vm.urlPessoa, objetoDados).then(
+                function (pessoaRetorno) {
+                    vm.incluirRelacionamento(pessoaRetorno);
+                });
+
+        } else if (vm.acao == "Editar") {
+            vm.incluirRelacionamento(objetoDados);
+        }
+    };
+
+    vm.incluirRelacionamento = function (objetoParam) {
+        var objetoDados = angular.copy(objetoParam);
+
         var listaEndereco = [];
-        angular.forEach(objetoDados.enderecos, function (value, key) {
+        angular.forEach(vm.enderecos, function (value, key) {
             if (value.complemento.length > 0) {
                 value.idPessoa = objetoDados.id;
                 listaEndereco.push(angular.copy(value));
             }
         });
+        angular.forEach(objetoDados.enderecos, function (value, key) {
+            listaEndereco.push(angular.copy(value));
+        });
 
         objetoDados.enderecos = listaEndereco;
-        if (vm.perfil !== null){
 
+        if (vm.perfil !== null && vm.perfil !== undefined){
             var isNovoPerfil = true;
+            var novoPerfils = [];
             
             angular.forEach(objetoDados.perfils, function (value, key) {
                 if (value.id === vm.perfil.id) {
                     isNovoPerfil = false;
                 }
             });
-            if (isNovoPerfil)
-                objetoDados.perfils.push(vm.perfil);
+            if (isNovoPerfil){
+                novoPerfils.push(vm.perfil);
+                objetoDados.perfils = novoPerfils;
+            }
         } else
             objetoDados.perfils = [];
 
-        if (vm.acao == "Cadastrar") {
-
-            vm.salvar(vm.urlPessoa, objetoDados).then(
-                function (pessoaRetorno) {
-                    vm.retornarTelaListagem();
-                });
-        } else if (vm.acao == "Editar") {
-            vm.alterar(vm.urlPessoa, objetoDados).then(
-                function (pessoaRetorno) {
-                    vm.retornarTelaListagem();
-                });
-        }
+        vm.alterar(vm.urlPessoa, objetoDados).then(
+            function (pessoaRetorno) {
+                vm.retornarTelaListagem();
+            });
     };
 
     vm.remover = function (objeto, tipo) {
@@ -179,7 +196,7 @@ function PessoaIncluirAlterarController(
                     });
             }
         } else {
-            vm.pessoa.enderecos.push(angular.copy(endereco));
+            vm.enderecos.push(angular.copy(endereco));
             vm.limparTela;
         }
     };
