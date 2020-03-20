@@ -131,14 +131,14 @@ function PessoaIncluirAlterarController(
         var objetoDados = angular.copy(objetoParam);
 
         var listaEndereco = [];
+        angular.forEach(objetoDados.enderecos, function (value, key) {
+            listaEndereco.push(angular.copy(value));
+        });
         angular.forEach(vm.enderecos, function (value, key) {
             if (value.complemento.length > 0) {
                 value.idPessoa = objetoDados.id;
                 listaEndereco.push(angular.copy(value));
             }
-        });
-        angular.forEach(objetoDados.enderecos, function (value, key) {
-            listaEndereco.push(angular.copy(value));
         });
 
         objetoDados.enderecos = listaEndereco;
