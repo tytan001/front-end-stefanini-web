@@ -34,6 +34,8 @@
           id="cepEndereco"
           ng-model="vm.enderecoModal.cep"
           placeholder="Digite o cep"
+          maxlength="8"
+          ng-change="vm.buscarCep()"
         />
       </div>
       <div class="form-group">
@@ -44,6 +46,7 @@
           id="logradouroEndereco"
           ng-model="vm.enderecoModal.logradouro"
           placeholder="Digite o logradouro"
+          disabled
         />
       </div>
       <div class="form-group">
@@ -63,6 +66,7 @@
           id="bairroEndereco"
           ng-model="vm.enderecoModal.bairro"
           placeholder="Digite o bairro"
+          disabled
         />
       </div>
       <div class="row" style="padding-left: 15px;">
@@ -74,6 +78,7 @@
             id="cidadeEndereco"
             ng-model="vm.enderecoModal.localidade"
             placeholder="Digite o nome da cidade"
+            disabled
           />
         </div>
 
@@ -87,6 +92,7 @@
             placeholder="UF"
             maxlength="2"
             size="4"
+            disabled
           />
         </div>        
       </div>

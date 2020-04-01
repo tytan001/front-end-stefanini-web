@@ -42,6 +42,7 @@ function PessoaIncluirAlterarController(
     vm.enderecos = vm.pessoa.enderecos;
 
     vm.urlEndereco = "http://localhost:8080/treinamento/api/enderecos/";
+    vm.urlBuscarCep = "http://localhost:8080/treinamento/api/enderecos/buscar/";
     vm.urlPerfil = "http://localhost:8080/treinamento/api/perfils/";
     vm.urlPessoa = "http://localhost:8080/treinamento/api/pessoas/";
 
@@ -178,6 +179,23 @@ function PessoaIncluirAlterarController(
     };
 
     /**METODOS DA MODAL */
+    vm.buscarCep = function(){
+        if(vm.enderecoModal.cep.length == 8){
+            HackatonStefaniniService.listar(vm.urlBuscarCep + vm.enderecoModal.cep).then(
+                function(response){
+                    if(response.data.cep != null && response.data.cep != undefined){
+                        vm.enderecoModal.uf = response.data.uf;
+                        vm.enderecoModal.localidade = response.data.localidade;
+                        vm.enderecoModal.bairro = response.data.bairro;
+                        vm.enderecoModal.logradouro = response.data.logradouro;
+                    } else {
+                        alert("Cep inválido")
+                    }
+                });
+        }
+
+    };
+
     vm.incluirEndereco = function (endereco) {
         var objetoDados = angular.copy(endereco);
         
