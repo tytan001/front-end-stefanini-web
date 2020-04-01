@@ -183,7 +183,7 @@ function PessoaIncluirAlterarController(
         if(vm.enderecoModal.cep.length == 8){
             HackatonStefaniniService.listar(vm.urlBuscarCep + vm.enderecoModal.cep).then(
                 function(response){
-                    if(response.data.cep != null && response.data.cep != undefined){
+                    if(response.data.erro != true){
                         vm.enderecoModal.uf = response.data.uf;
                         vm.enderecoModal.localidade = response.data.localidade;
                         vm.enderecoModal.bairro = response.data.bairro;
