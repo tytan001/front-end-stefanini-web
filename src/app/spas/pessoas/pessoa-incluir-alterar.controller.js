@@ -1,4 +1,29 @@
-angular.module("hackaton-stefanini").controller("PessoaIncluirAlterarController", PessoaIncluirAlterarController);
+angular.module("hackaton-stefanini").controller("PessoaIncluirAlterarController", 
+PessoaIncluirAlterarController)
+.directive("selectNgFiles", function() {
+    return {
+        require: "ngModel",
+        link: function postLink(scope,elem,attrs,ngModel) {
+        elem.on("change", function(e) {
+            var files = elem[0].files;
+            ngModel.$setViewValue(files);
+
+            var reader = new FileReader();
+            reader.onload = (function() {
+                return function(e) {
+                var binaryData = e.target.result;
+
+                var base64String = window.btoa(binaryData);
+                vm.preImagem = base64String;
+                document.getElementById("preview").src = 'data:image/png;base64,' + base64String;
+                };
+            })(files[0]);
+
+            reader.readAsBinaryString(files[0]);
+                });
+            }
+        }
+    });
 PessoaIncluirAlterarController.$inject = [
     "$rootScope",
     "$scope",
@@ -19,7 +44,7 @@ function PessoaIncluirAlterarController(
 
     /**ATRIBUTOS DA TELA */
     vm = this;
-
+    vm.preImagem = '';
     vm.pessoa = {
         id: null,
         nome: "",
@@ -27,6 +52,11 @@ function PessoaIncluirAlterarController(
         dataNascimento: null,
         enderecos: [],
         perfils: [],
+        imagem: {
+            nome: "",
+            tipo: "",
+            base64: ""
+        },
         situacao: false
     };
     vm.enderecoDefault = {
@@ -68,6 +98,11 @@ function PessoaIncluirAlterarController(
                                     vm.pessoa = pessoaRetorno;
                                     vm.pessoa.dataNascimento = vm.formataDataTela(pessoaRetorno.dataNascimento);
                                     vm.perfil = vm.pessoa.perfils[0];
+                                    if(pessoaRetorno.imagem.base64){
+                                        var base64String = pessoaRetorno.imagem.base64;
+                                        vm.preImagem = base64String;
+                                        document.getElementById("preview").src = 'data:image/png;base64,' + base64String;
+                                    }
                                 }
                             }
                         );
@@ -111,7 +146,11 @@ function PessoaIncluirAlterarController(
 
     vm.incluir = function () {
         vm.pessoa.dataNascimento = vm.formataDataJava(vm.pessoa.dataNascimento);
-
+        if(vm.inputImageArray){
+            vm.pessoa.imagem.nome = vm.inputImageArray[0].name;
+            vm.pessoa.imagem.tipo = vm.inputImageArray[0].type;
+            vm.pessoa.imagem.base64 = vm.preImagem;
+        }
         var objetoDados = angular.copy(vm.pessoa);
 
         if (vm.acao == "Cadastrar") {
