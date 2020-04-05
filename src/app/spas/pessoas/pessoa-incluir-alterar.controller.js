@@ -69,6 +69,7 @@ function PessoaIncluirAlterarController(
         logradouro: "",
         complemento: ""
     };
+    vm.enderecos = vm.pessoa.enderecos;
 
     vm.urlEndereco = "http://localhost:8080/treinamento/api/enderecos/";
     vm.urlBuscarCep = "http://localhost:8080/treinamento/api/enderecos/buscar/";
