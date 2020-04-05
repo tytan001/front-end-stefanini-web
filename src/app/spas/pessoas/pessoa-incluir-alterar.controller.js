@@ -97,7 +97,7 @@ function PessoaIncluirAlterarController(
                                 if (pessoaRetorno !== undefined) {
                                     vm.pessoa = pessoaRetorno;
                                     vm.pessoa.dataNascimento = vm.formataDataTela(pessoaRetorno.dataNascimento);
-                                    vm.perfil = vm.pessoa.perfils[0];
+                                    vm.perfil = vm.pessoa.perfils;
                                     if(pessoaRetorno.imagem.base64){
                                         var base64String = pessoaRetorno.imagem.base64;
                                         vm.preImagem = base64String;
@@ -183,21 +183,13 @@ function PessoaIncluirAlterarController(
 
         objetoDados.enderecos = listaEndereco;
 
-        if (vm.perfil !== null && vm.perfil !== undefined){
-            var isNovoPerfil = true;
-            var novoPerfils = [];
+        var novoPerfils = [];
             
-            angular.forEach(objetoDados.perfils, function (value, key) {
-                if (value.id === vm.perfil.id) {
-                    isNovoPerfil = false;
-                }
-            });
-            if (isNovoPerfil){
-                novoPerfils.push(vm.perfil);
-                objetoDados.perfils = novoPerfils;
-            }
-        } else
-            objetoDados.perfils = [];
+        angular.forEach(vm.perfil, function (value, key) {
+            novoPerfils.push(value);
+        });
+
+        objetoDados.perfils = novoPerfils;
 
         vm.alterar(vm.urlPessoa, objetoDados).then(
             function (pessoaRetorno) {

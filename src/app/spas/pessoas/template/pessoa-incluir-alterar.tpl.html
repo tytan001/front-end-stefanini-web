@@ -75,10 +75,11 @@
               <label for="nomePerfil">Perfil</label>
               <div>
                 <select
-                  style="width: 250px; height: 38px;"
+                  style="width: 250px; height: 50px;"
                   ng-class="{'disabledDiv': vm.listaPerfil.length === 0, 'custom-select custom-select-sm': true}"
                   ng-options="item as item.nome for item in vm.listaPerfil track by item.id"
                   ng-model="vm.perfil"
+                  multiple
                 >
                   <option value="">-- PERFIL --</option>
                 </select>
